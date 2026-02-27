@@ -11,11 +11,9 @@ async function obtenerMonsters1() {
 
 }
 
-
-
 async function obtenerMonsters2(limit = 1) {
   const response = await fetch(
-    `https://www.dnd5eapi.co/api/2014/monsters?limit=${limit}`
+    `https://www.dnd5eapi.co/api/2014/monsters`
   );
   
   const data = await response.json();
