@@ -1,25 +1,15 @@
-app.get('/api/pokemones/fuego', async (req, res) => {
-  try {
-    const pokemones = await obtenerPokemones(20);
+//const express = require('express');
+//const app = express();
 
-    // múltiples llamados fetch
-    const detalles = await Promise.all(
-      pokemones.map(p =>
-        fetch(p.url).then(r => r.json())
-      )
-    );
+async function obtenerMonsters(limit = 20) {
+  const response = await fetch(
+    `https://www.dnd5eapi.co/api/2014/monsters`
+  );
 
-    const tipoFuego = detalles
-      .filter(pokemon =>
-        pokemon.types.some(t => t.type.name === 'fire')
-      )
-      .map(pokemon => ({
-        nombre: pokemon.name,
-        tipos: pokemon.types.map(t => t.type.name)
-      }));
+  const data = await response.json();
+  return data.results; // [{ name, url }]
 
-    res.json(tipoFuego);
-  } catch (error) {
-    res.status(500).json({ error: 'Error filtrando Pokémon' });
-  }
-});
+}
+
+let monsters= await obtenerMonsters();
+console.log(monsters);
