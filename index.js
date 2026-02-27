@@ -60,3 +60,20 @@ const result = monsters.reduce((accum, monster) => {
 
 console.log(result)
 // every: ¿todos tienen stats completos (6 atributos) y hp > 0?
+
+// e
+
+const resultBucket  = monsters.reduce((accum, monster) => {
+  let bucket;
+
+  if (monster.cr <= 1) bucket = "0-1";
+  else if (monster.cr <= 4) bucket = "2-4";
+  else if (monster.cr <= 9) bucket = "5-9";
+  else bucket = "10+";
+
+  accum[bucket] = (accum[bucket] || 0) + 1;
+
+  return accum;
+}, {});
+
+console.log(resultBucket);
