@@ -13,7 +13,17 @@ async function obtenerMonsters(limit = 2) {
     acum.push(m.url);
     return acum;
   },[])
-  return urls; // [{ name, url }]
+
+  const promises = urls.map((url) => {
+    const curl = ("https://www.dnd5eapi.co"+url)
+    return fetch(curl)
+  });
+
+  const responses = await Promise.all(promises)
+  const d = await Promise.all(responses.map(async r => r.json()));
+
+  return d; // [{ name, url }]
+
 }
 let monsters= await obtenerMonsters();
 console.log( monsters);
